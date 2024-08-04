@@ -42,6 +42,25 @@ $ echo 'export AWS_DEFAULT_REGION="your_default_region"' >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
+## Generate SSH Key Pair
+
+You need to generate an SSH key pair to access your EC2 instance. Follow these steps:
+
+1. **Generate the SSH Key Pair**
+
+Use the following command to generate a new SSH key pair:
+
+```sh
+$ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
+```
+
+This command will create two files:
+
+```sh
+~/.ssh/id_rsa (private key)
+~/.ssh/id_rsa.pub (public key)
+```
+
 ## IAM Permissions
 
 To successfully deploy and manage the infrastructure defined in this repository, ensure that your IAM user or role has the following permissions:
