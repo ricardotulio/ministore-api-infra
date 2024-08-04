@@ -69,6 +69,8 @@ To successfully deploy and manage the infrastructure defined in this repository,
 - **AmazonRDSFullAccess**: Allows full access to Amazon RDS resources.
 - **AmazonS3FullAccess**: Allows full access to Amazon S3 resources.
 - **AmazonSSMFullAccess**: Allows full access to AWS Systems Manager (SSM) resources.
+- **AWSCodeBuildAdminAccess**: aLLOWS full access to AWS CodeBuild via the AWS Management Console.
+- **IAMFullAccess**: Allows full access to IAM via the AWS Management Console.
 
 These permissions are needed to create, modify, and manage EC2 instances, RDS instances, S3 buckets, and SSM parameters.
 
