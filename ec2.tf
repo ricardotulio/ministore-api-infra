@@ -6,8 +6,5 @@ resource "aws_instance" "ministore-api" {
   security_groups = [aws_security_group.ministore-ec2.id]
   key_name        = aws_key_pair.ssh-key.key_name # Associate the key pair
 
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update
-              EOF
+  user_data = file("./scripts/ec2_setup.sh")
 }
