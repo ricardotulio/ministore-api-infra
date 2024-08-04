@@ -23,9 +23,13 @@ resource "aws_s3_bucket_policy" "ministore_api_artifact_bucket_policy" {
         },
         Action = [
           "s3:GetObject",
-          "s3:PutObject"
+          "s3:PutObject",
+          "s3:ListBucket"
         ],
-        Resource = "${aws_s3_bucket.ministore_api_codebuild_artifact_bucket.arn}/*"
+        Resource = [
+          "${aws_s3_bucket.ministore_api_codebuild_artifact_bucket.arn}/*",
+          aws_s3_bucket.ministore_api_codebuild_artifact_bucket.arn
+        ]
       }
     ]
   })
@@ -60,6 +64,11 @@ resource "aws_iam_role_policy_attachment" "codebuild_logs_policy_attach" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
 }
 
+resource "aws_iam_role_policy_attachment" "codebuild_s3_access" {
+  role       = aws_iam_role.ministore_api_codebuild_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess" # Allows full access to S3
+}
+
 # Create CodeBuild project
 resource "aws_codebuild_project" "ministore_api_build" {
   name          = "ministore-api-build"
@@ -85,13 +94,9 @@ resource "aws_codebuild_project" "ministore_api_build" {
   }
 
   environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "amazoncorretto:17" # Docker image with Java 17
-    type                        = "LINUX_CONTAINER"
-    environment_variable {
-      name  = "JAVA_HOME"
-      value = "/usr/lib/jvm/java-17-amazon-corretto/" # Path for Java 17
-    }
+    compute_type = "BUILD_GENERAL1_SMALL"  # Choose appropriate compute type
+    image        = "aws/codebuild/amazonlinux2-x86_64-standard:5.0"  # Managed image with Java
+    type         = "LINUX_CONTAINER"
   }
 
   tags = {
