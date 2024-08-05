@@ -36,7 +36,7 @@ variable "github_repo" {
 }
 
 variable "github_branch" {
-  default = "main"
+  default = "master"
 }
 
 variable "ssh_user" {
