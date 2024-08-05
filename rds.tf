@@ -17,10 +17,10 @@ resource "aws_security_group" "ministore-db" {
   vpc_id = aws_vpc.ministore-vpc.id
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
+    from_port   = 5432
+    to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    security_groups = [aws_security_group.ministore-ec2-security-group.id]
   }
 
   egress {

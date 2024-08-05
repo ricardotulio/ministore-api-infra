@@ -3,7 +3,7 @@ resource "aws_instance" "ministore-api" {
   ami                  = "ami-0b36f2748d7665334" # Change to your preferred AMI
   instance_type        = var.ec2_instance_type
   subnet_id            = aws_subnet.ministore-subnet-1.id
-  security_groups      = [aws_security_group.ministore-ec2.id]
+  security_groups      = [aws_security_group.ministore-ec2-security-group.id]
   key_name             = aws_key_pair.ssh-key.key_name # Associate the key pair
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
@@ -39,7 +39,7 @@ SPRING_DATASOURCE_URL='jdbc:postgresql://${aws_db_instance.ministore-db.endpoint
   }
 }
 
-resource "aws_security_group" "ministore-ec2" {
+resource "aws_security_group" "ministore-ec2-security-group" {
   vpc_id = aws_vpc.ministore-vpc.id
 
   ingress {
