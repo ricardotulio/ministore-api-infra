@@ -1,18 +1,6 @@
 # variables.tf
-variable "ssh_user" {
-  type = string
-}
-
-variable "ssh_public_key_path" {
-  type = string
-}
-
-variable "ssh_private_key_path" {
-  type = string
-}
-
 variable "ec2_home_path" {
-  type = string
+  default = "/home/ec2-user"
 }
 
 variable "vpc_cidr" {
@@ -35,30 +23,42 @@ variable "rds_instance_class" {
   default = "db.t3.micro"
 }
 
+variable "github_owner" {
+  default = "ricardotulio"
+}
+
+variable "github_project" {
+  default = "ministore-api"
+}
+
+variable "github_repo" {
+  default = "https://github.com/ricardotulio/ministore-api"
+}
+
+variable "github_branch" {
+  default = "main"
+}
+
+variable "ssh_user" {
+  type = string
+}
+
+variable "ssh_private_key_path" {
+  default = "~/.ssh/id_rsa"
+}
+
+variable "ssh_public_key_path" {
+  default = "~/.ssh/id_rsa.pub"
+}
+
+variable "github_token" {
+  type = string
+}
+
 variable "db_name" {
   type = string
 }
 
 variable "db_username" {
-  type = string
-}
-
-variable "github_owner" {
-  type = string
-}
-
-variable "github_project" {
-  type = string
-}
-
-variable "github_repo" {
-  type = string
-}
-
-variable "github_branch" {
-  type = string
-}
-
-variable "github_token" {
   type = string
 }
