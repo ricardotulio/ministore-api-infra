@@ -18,7 +18,7 @@ resource "aws_instance" "ministore-api" {
     content = <<EOF
 POSTGRES_USER='${var.db_username}'
 POSTGRES_PASSWORD='${aws_ssm_parameter.db_password.value}'
-SPRING_DATASOURCE_URL='jdbc:postgresql://${aws_db_instance.ministore-db.endpoint}:5432/${var.db_name}'
+SPRING_DATASOURCE_URL='jdbc:postgresql://${aws_db_instance.ministore-db.endpoint}/${var.db_name}'
       EOF
 
     destination = "${var.ec2_home_path}/environment"
