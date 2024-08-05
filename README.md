@@ -49,7 +49,7 @@ Steps to Configure terraform.tfvars
 
 1. **Create the terraform.tfvars file:**
 
-If it does not already exist, create a file named `secrets.tfvars` in the root directory of your Terraform project, or create a copy from `secrets.tvars.example`.
+If it does not already exist, create a file named `terraform.tfvars` in the root directory of your Terraform project, or create a copy from `terraform.tvars.example`.
 
 2. **Add the required variables:**
 
