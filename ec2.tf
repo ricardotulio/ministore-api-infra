@@ -39,6 +39,31 @@ SPRING_DATASOURCE_URL='jdbc:postgresql://${aws_db_instance.ministore-db.endpoint
   }
 }
 
+resource "aws_security_group" "ministore-ec2" {
+  vpc_id = aws_vpc.ministore-vpc.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 # Define the IAM Role for EC2 to use with CodeDeploy
 resource "aws_iam_role" "ec2_instance_role" {
   name = "EC2InstanceRole"
