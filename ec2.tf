@@ -1,13 +1,38 @@
 # Define EC2 Instance
 resource "aws_instance" "ministore-api" {
-  ami             = "ami-0b36f2748d7665334" # Change to your preferred AMI
-  instance_type   = var.ec2_instance_type
-  subnet_id       = aws_subnet.ministore-subnet-1.id
-  security_groups = [aws_security_group.ministore-ec2.id]
-  key_name        = aws_key_pair.ssh-key.key_name # Associate the key pair
-  iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
+  ami                  = "ami-0b36f2748d7665334" # Change to your preferred AMI
+  instance_type        = var.ec2_instance_type
+  subnet_id            = aws_subnet.ministore-subnet-1.id
+  security_groups      = [aws_security_group.ministore-ec2.id]
+  key_name             = aws_key_pair.ssh-key.key_name # Associate the key pair
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+
+  connection {
+    type        = "ssh"
+    user        = var.ssh_user
+    private_key = file(var.ssh_private_key_path)
+    host        = self.public_ip
+  }
+
+  provisioner "file" {
+    content = <<EOF
+POSTGRES_USER='${var.db_username}'
+POSTGRES_PASSWORD='${aws_ssm_parameter.db_password.value}'
+SPRING_DATASOURCE_URL='jdbc:postgresql://${aws_db_instance.ministore-db.endpoint}:5432/${var.db_name}'
+      EOF
+
+    destination = "${var.ec2_home_path}/environment"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv ${var.ec2_home_path}/environment /etc/environment"
+    ]
+  }
 
   user_data = file("./scripts/ec2_setup.sh")
+
+  depends_on = [aws_db_instance.ministore-db]
 
   tags = {
     Name = "ministore-api-ec2"

@@ -64,6 +64,8 @@ resource "aws_codepipeline" "ministore_api_pipeline" {
       }
     }
   }
+
+  depends_on = [aws_instance.ministore-api, aws_db_instance.ministore-db]
 }
 
 # IAM Role for CodePipeline
@@ -84,35 +86,17 @@ resource "aws_iam_role" "codepipeline_service_role" {
   })
 }
 
-resource "aws_iam_role_policy" "codepipeline_codedeploy_policy" {
-  name = "CodePipelineCodeDeployPolicy"
-  role = aws_iam_role.codepipeline_service_role.id
+resource "aws_iam_role_policy_attachment" "codepipeline_s3_full_access" {
+  role       = aws_iam_role.codepipeline_service_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess" # Allows full access to S3
+}
 
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "codebuild:*",
-          "codedeploy:*"
-        ],
-        Resource = "*"
-      },
-      {
-        Effect = "Allow",
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:ListBucket",
-          "s3:GetBucketLocation",
-          "s3:GetObjectVersion"
-        ],
-        Resource = [
-          "${aws_s3_bucket.ministore_api_codebuild_artifact_bucket.arn}",
-          "${aws_s3_bucket.ministore_api_codebuild_artifact_bucket.arn}/*"
-        ]
-      }
-    ]
-  })
+resource "aws_iam_role_policy_attachment" "codepipeline_codebuild_dev_access" {
+  role       = aws_iam_role.codepipeline_service_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess" # Allows full access to S3
+}
+
+resource "aws_iam_role_policy_attachment" "codepipeline_codedeploy_full_access" {
+  role       = aws_iam_role.codepipeline_service_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployFullAccess" # Allows full access to S3
 }

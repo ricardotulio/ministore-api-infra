@@ -49,20 +49,24 @@ Steps to Configure terraform.tfvars
 
 1. **Create the terraform.tfvars file:**
 
-If it does not already exist, create a file named terraform.tfvars in the root directory of your Terraform project.
+If it does not already exist, create a file named terraform.tfvars in the root directory of your Terraform project, or create a copy from `terraform.tvars.example`.
 
 2. **Add the required variables:**
 
 Open the terraform.tfvars file and add the following variables. Make sure to replace any placeholder values with your actual values as needed.
 
 ```hcl
-db_name        = "your db name here"
-db_username    = "your db user here"
-github_owner   = "your github account here"
-github_project = "your github project here"
-github_repo    = "your github repo here (e.g.: https://github.com/ricardotulio/ministore-api/)"
-github_branch  = "master"
-github_token   = "your github token here"
+ssh_user                = "your-user"
+ssh_private_key_path    = "/path/to/id_rsa"
+ssh_public_key_path     = "/path/to/id_rsa.pub"
+ec2_home_path           = "/home/ec2-user"
+db_name                 = "your db name here"
+db_username             = "your db user here"
+github_owner            = "your github account here"
+github_project          = "your github project here"
+github_repo             = "your github repo here (e.g.: https://github.com/ricardotulio/ministore-api/)"
+github_branch           = "master"
+github_token            = "your github token here"
 ```
 
 These variables are used to configure the database settings for your infrastructure.

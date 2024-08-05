@@ -1,4 +1,20 @@
 # variables.tf
+variable "ssh_user" {
+  type = string
+}
+
+variable "ssh_public_key_path" {
+  type = string
+}
+
+variable "ssh_private_key_path" {
+  type = string
+}
+
+variable "ec2_home_path" {
+  type = string
+}
+
 variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }
