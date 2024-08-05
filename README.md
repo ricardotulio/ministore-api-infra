@@ -42,24 +42,25 @@ $ echo 'export AWS_DEFAULT_REGION="your_default_region"' >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
-## Generate SSH Key Pair
+## Setting Up Terraform Variables
 
-You need to generate an SSH key pair to access your EC2 instance. Follow these steps:
+To configure Terraform for your environment, you'll need to provide certain variables in the terraform.tfvars file. This file should be created in the root of your Terraform configuration directory.
+Steps to Configure terraform.tfvars
 
-1. **Generate the SSH Key Pair**
+1. **Create the terraform.tfvars file:**
 
-Use the following command to generate a new SSH key pair:
+If it does not already exist, create a file named terraform.tfvars in the root directory of your Terraform project.
 
-```sh
-$ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
+2. **Add the required variables:**
+
+Open the terraform.tfvars file and add the following variables. Make sure to replace any placeholder values with your actual values as needed.
+
+```hcl
+db_name     = "your_db_name_here"
+db_username = "your_db_user_here"
 ```
 
-This command will create two files:
-
-```sh
-~/.ssh/id_rsa (private key)
-~/.ssh/id_rsa.pub (public key)
-```
+These variables are used to configure the database settings for your infrastructure.
 
 ## GitHub Access Token
 
@@ -78,6 +79,25 @@ github_token = "your_github_token_here"
 ```
 
 Replace your_github_token_here with the token you obtained.
+
+## Generate SSH Key Pair
+
+You need to generate an SSH key pair to access your EC2 instance. Follow these steps:
+
+1. **Generate the SSH Key Pair**
+
+Use the following command to generate a new SSH key pair:
+
+```sh
+$ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
+```
+
+This command will create two files:
+
+```sh
+~/.ssh/id_rsa (private key)
+~/.ssh/id_rsa.pub (public key)
+```
 
 ## IAM Permissions
 

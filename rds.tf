@@ -8,20 +8,20 @@ resource "aws_db_subnet_group" "default" {
 }
 
 resource "random_password" "db_password" {
-  length  = 16
-  upper   = true
-  lower   = true
-  numeric = true
-  special = true
+  length           = 16
+  upper            = true
+  lower            = true
+  numeric          = true
+  special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
 resource "aws_ssm_parameter" "db_password" {
-  name            = "/ministore/db_password"
-  description     = "The database password"
-  type            = "SecureString"
-  value           = random_password.db_password.result
-  overwrite       = true
+  name        = "/ministore/db_password"
+  description = "The database password"
+  type        = "SecureString"
+  value       = random_password.db_password.result
+  overwrite   = true
 }
 
 resource "aws_db_instance" "ministore-db" {

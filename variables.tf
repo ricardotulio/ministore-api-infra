@@ -11,24 +11,20 @@ variable "subnet_cidr_2" {
   default = "10.0.2.0/24"
 }
 
+variable "ec2_instance_type" {
+  default = "t2.micro"
+}
+
 variable "rds_instance_class" {
   default = "db.t3.micro"
 }
 
 variable "db_name" {
-  default = "ministoredb"
+  type = string
 }
 
 variable "db_username" {
-  default = "pguser"
-}
-
-variable "db_password" {
-  default = "password"
-}
-
-variable "ec2_instance_type" {
-  default = "t2.micro"
+  type = string
 }
 
 variable "github_token" {
