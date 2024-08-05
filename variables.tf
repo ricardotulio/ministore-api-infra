@@ -30,3 +30,7 @@ variable "db_password" {
 variable "ec2_instance_type" {
   default = "t2.micro"
 }
+
+variable "github_token" {
+  type = string
+}

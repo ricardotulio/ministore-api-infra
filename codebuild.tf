@@ -2,6 +2,7 @@
 resource "aws_s3_bucket" "ministore_api_codebuild_artifact_bucket" {
   bucket_prefix = "ministore-api-codebuild-artifacts"
   acl           = "private"
+  force_destroy = true
 
   tags = {
     Name        = "ministore-api-artifacts-bucket"
@@ -77,25 +78,24 @@ resource "aws_codebuild_project" "ministore_api_build" {
   build_timeout = 20
 
   source {
-    type           = "GITHUB"
-    location       = "https://github.com/ricardotulio/ministore-api"
-    buildspec      = "buildspec.yml"
-    git_clone_depth = 1  # Optional: Limits the clone depth
+    type                = "GITHUB"
+    location            = "https://github.com/ricardotulio/ministore-api"
+    buildspec           = "buildspec.yml"
+    git_clone_depth     = 1 # Optional: Limits the clone depth
     report_build_status = true
   }
 
   artifacts {
-    type            = "S3"
-    location        = aws_s3_bucket.ministore_api_codebuild_artifact_bucket.bucket
-    packaging       = "ZIP"
-    path            = "artifacts/"
-    namespace_type  = "BUILD_ID"
+    type                   = "S3"
+    location               = aws_s3_bucket.ministore_api_codebuild_artifact_bucket.bucket
+    packaging              = "ZIP"
+    path                   = "artifacts/"
     override_artifact_name = false
   }
 
   environment {
-    compute_type = "BUILD_GENERAL1_SMALL"  # Choose appropriate compute type
-    image        = "aws/codebuild/amazonlinux2-x86_64-standard:5.0"  # Managed image with Java
+    compute_type = "BUILD_GENERAL1_SMALL"                           # Choose appropriate compute type
+    image        = "aws/codebuild/amazonlinux2-x86_64-standard:5.0" # Managed image with Java
     type         = "LINUX_CONTAINER"
   }
 

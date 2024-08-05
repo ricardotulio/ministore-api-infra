@@ -61,6 +61,24 @@ This command will create two files:
 ~/.ssh/id_rsa.pub (public key)
 ```
 
+## GitHub Access Token
+
+To enable CodePipeline to access your GitHub repository and trigger builds, you need to provide a GitHub personal access token. This token is used by Terraform to configure CodePipeline.
+Steps to Add the GitHub Access Token
+
+1. **Generate a GitHub Access Token:**
+Follow the instructions in the GitHub Personal Access Tokens documentation to generate a new token.
+
+2. **Add the GitHub Token to terraform.tfvars:**
+Open your terraform.tfvars file, or create one if it does not exist.
+Add the following entry to the file:
+
+```hcl
+github_token = "your_github_token_here"
+```
+
+Replace your_github_token_here with the token you obtained.
+
 ## IAM Permissions
 
 To successfully deploy and manage the infrastructure defined in this repository, ensure that your IAM user or role has the following permissions:
