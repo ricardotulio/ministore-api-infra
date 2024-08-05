@@ -22,9 +22,9 @@ sudo ./install auto
 
 # Check if the CodeDeploy agent is running
 if systemctl is-active --quiet codedeploy-agent; then
-    echo "CodeDeploy agent is already running."
+    sudo echo "CodeDeploy agent is already running."
 else
     echo "CodeDeploy agent is not running. Starting the CodeDeploy agent..."
-    systemctl start codedeploy-agent
-    systemctl enable codedeploy-agent
+    sudo systemctl start codedeploy-agent
+    sudo systemctl enable codedeploy-agent
 fi
