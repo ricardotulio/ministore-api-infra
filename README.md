@@ -56,8 +56,13 @@ If it does not already exist, create a file named terraform.tfvars in the root d
 Open the terraform.tfvars file and add the following variables. Make sure to replace any placeholder values with your actual values as needed.
 
 ```hcl
-db_name     = "your_db_name_here"
-db_username = "your_db_user_here"
+db_name        = "your db name here"
+db_username    = "your db user here"
+github_owner   = "your github account here"
+github_project = "your github project here"
+github_repo    = "your github repo here (e.g.: https://github.com/ricardotulio/ministore-api/)"
+github_branch  = "master"
+github_token   = "your github token here"
 ```
 
 These variables are used to configure the database settings for your infrastructure.

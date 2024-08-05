@@ -79,7 +79,7 @@ resource "aws_codebuild_project" "ministore_api_build" {
 
   source {
     type                = "GITHUB"
-    location            = "https://github.com/ricardotulio/ministore-api"
+    location            = var.github_repo
     buildspec           = "buildspec.yml"
     git_clone_depth     = 1 # Optional: Limits the clone depth
     report_build_status = true
