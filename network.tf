@@ -12,7 +12,7 @@ resource "aws_vpc" "ministore-vpc" {
 resource "aws_subnet" "ministore-subnet-1" {
   vpc_id                  = aws_vpc.ministore-vpc.id
   cidr_block              = var.subnet_cidr_1
-  availability_zone       = "us-west-1b"
+  availability_zone       = "us-west-2b"
   map_public_ip_on_launch = true
   tags = {
     Name = "ministore-subnet-1"
@@ -23,7 +23,7 @@ resource "aws_subnet" "ministore-subnet-1" {
 resource "aws_subnet" "ministore-subnet-2" {
   vpc_id                  = aws_vpc.ministore-vpc.id
   cidr_block              = var.subnet_cidr_2
-  availability_zone       = "us-west-1c"
+  availability_zone       = "us-west-2c"
   map_public_ip_on_launch = true
   tags = {
     Name = "ministore-subnet-2"
