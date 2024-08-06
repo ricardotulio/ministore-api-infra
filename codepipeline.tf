@@ -68,6 +68,35 @@ resource "aws_codepipeline" "ministore_api_pipeline" {
   depends_on = [aws_instance.ministore-api, aws_db_instance.ministore-db]
 }
 
+resource "aws_codepipeline_webhook" "codepipline_webhook" {
+  name            = "ministore-api-pipeline-webhook"
+  authentication  = "GITHUB_HMAC"
+  target_action   = "Source"
+  target_pipeline = "${aws_codepipeline.ministore_api_pipeline.name}"
+
+  authentication_configuration {
+    secret_token = "${var.github_token}"
+  }
+
+  filter {
+    json_path    = "$.ref"
+    match_equals = "refs/heads/{Branch}"
+  }
+}
+
+resource "github_repository_webhook" "github_webhook" {
+  repository = "${var.github_project}"
+
+  configuration {
+    url          = "${aws_codepipeline_webhook.codepipline_webhook.url}"
+    content_type = "json"
+    insecure_ssl = true
+    secret       = "${var.github_token}"
+  }
+
+  events = ["push"]
+}
+
 # IAM Role for CodePipeline
 resource "aws_iam_role" "codepipeline_service_role" {
   name = "CodePipelineServiceRole"
